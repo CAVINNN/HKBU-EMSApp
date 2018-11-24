@@ -1,13 +1,7 @@
 <ion-view title="Venues" id="page4">
   <ion-content padding="true" class="has-header">
     <ion-list id="venues-list11">
-      <ion-item class="item-icon-right" id="venues-list-item48" ui-sref="tabsController.events()">SWT501
-        <i class="icon ion-ios-arrow-forward"></i>
-      </ion-item>
-      <ion-item class="item-icon-right" id="venues-list-item49" ui-sref="tabsController.events()">AC Hall
-        <i class="icon ion-ios-arrow-forward"></i>
-      </ion-item>
-      <ion-item class="item-icon-right" id="venues-list-item50" ui-sref="tabsController.events()">RRS638
+      <ion-item ng-repeat="venue in venues" class="item-icon-right" id="venues-list-item48" ui-sref="tabsController.events({ venue: venue.VenueID })">{{ venue.VenueID }}
         <i class="icon ion-ios-arrow-forward"></i>
       </ion-item>
     </ion-list>

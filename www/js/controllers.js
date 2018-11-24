@@ -1,74 +1,133 @@
 angular.module('app.controllers', [])
-  
-.controller('starEventsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+
+  .controller('starEventsCtrl', ['$scope', '$stateParams', '$http',
+    function ($scope, $stateParams, $http) {
+
+      $http.get("http://localhost:1337/index")
+        .then(function (response) {
+
+          let starEvents = response.data.starEvents;
+          starEvents.forEach(function(starEvent){
+            starEvent.eventDate = new Date(starEvent.eventDate);
+          });
+
+          $scope.starEvents = starEvents;
+
+        }, function (error) {
+          console.log(error);
+        });
+
+    }])
+
+  .controller('organizersCtrl', ['$scope', '$stateParams',
+    function ($scope, $stateParams) {
 
 
-}])
-   
-.controller('organizersCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+    }])
+
+  .controller('venuesCtrl', ['$scope', '$stateParams', 'Store',
+    function ($scope, $stateParams, Store) {
+
+      $scope.venues = Store.getAllVenues();
+
+    }])
+
+  .controller('meCtrl', ['$scope', '$stateParams', '$cookies',
+    function ($scope, $stateParams, $cookies) {
+
+      console.log($cookies.getAll());
+
+      console.log($cookies.get('sails.sid'));
+
+    }])
+
+  .controller('registerCtrl', ['$scope', '$stateParams', '$http',
+    function ($scope, $stateParams, $http) {
+
+      $http.get("http://localhost:1337/detail/" + $stateParams.id)
+        .then(function (response) {
+
+          $scope.event = response.data.event;
+
+        }, function (error) {
+          console.log(error);
+        });
+
+    }])
+
+  .controller('eventsCtrl', ['$scope', '$stateParams', '$http',
+    function ($scope, $stateParams, $http) {
+
+      if( $stateParams.organizer !== '' ) {
+        $http.get("http://localhost:1337/getEventsByOrgan/" + $stateParams.organizer)
+          .then(function (response) {
+            $scope.events = response.data.events;
+          }, function (error) {
+            console.log(error);
+          });
+      }
+
+      if( $stateParams.venue !== '' ) {
+        $http.get("http://localhost:1337/getEventsByVenue/" + $stateParams.venue)
+          .then(function (response) {
+            $scope.events = response.data.events;
+          }, function (error) {
+            console.log(error);
+          });
+      }
+
+    }])
+
+  // map
+  .controller('mapCtrl', ['$scope', '$stateParams', 'Store',
+    function ($scope, $stateParams, Store) {
+
+      let map = L.map('map').setView([22.337827, 114.181962], 17);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      let venue = Store.getVenue($stateParams.venueName)[0];
+
+      L.marker([venue.Latitude, venue.Longitude]).addTo(map).bindPopup(venue.VenueID);
+
+    }])
+
+  .controller('loginCtrl', ['$scope', '$stateParams', '$http', '$ionicHistory', '$ionicPopup',
+    function ($scope, $stateParams, $http, $ionicHistory, $ionicPopup) {
+
+      $scope.info = {};
+
+      $scope.login = function () {
+
+        $http.post("http://localhost:1337/mobileLogin", $scope.info)
+          .then(function (response) {
+
+            let cookie = response.data.cookie;
 
 
-}])
-   
-.controller('venuesCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+            let alertPopup = $ionicPopup.alert({
+              template: 'Login Successfully.'
+            });
+
+            $ionicHistory.goBack();
+
+          }, function (error) {
+
+            let alertPopup = $ionicPopup.alert({
+              title: error.data,
+              template: 'Login failed. Please try again.'
+            });
+
+          });
+
+      }
+
+    }])
+
+  .controller('registeredEventsCtrl', ['$scope', '$stateParams',
+    function ($scope, $stateParams) {
 
 
-}])
-      
-.controller('meCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-   
-.controller('registerCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-   
-.controller('eventsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-   
-.controller('mapCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-   
-.controller('loginCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-   
-.controller('registeredEventsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
- 
+    }])

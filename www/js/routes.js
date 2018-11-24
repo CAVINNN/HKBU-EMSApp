@@ -7,7 +7,7 @@ angular.module('app.routes', ['ionicUIRouter'])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-    
+
 
       .state('tabsController.starEvents', {
     url: '/starEvents',
@@ -55,7 +55,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  /* 
+  /*
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
       1) Using the ui-sref HTML attribute:
@@ -71,7 +71,7 @@ angular.module('app.routes', ['ionicUIRouter'])
       /tab/tab4/register
   */
   .state('tabsController.register', {
-    url: '/register',
+    url: '/register/:id',
     views: {
       'tab1': {
         templateUrl: 'templates/register.html',
@@ -92,7 +92,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  /* 
+  /*
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
       1) Using the ui-sref HTML attribute:
@@ -106,7 +106,7 @@ angular.module('app.routes', ['ionicUIRouter'])
       /tab/tab3/filterEvents
   */
   .state('tabsController.events', {
-    url: '/filterEvents',
+    url: '/filterEvents/:organizer/:venue',
     views: {
       'tab2': {
         templateUrl: 'templates/events.html',
@@ -119,7 +119,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  /* 
+  /*
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
       1) Using the ui-sref HTML attribute:
@@ -135,7 +135,7 @@ angular.module('app.routes', ['ionicUIRouter'])
       /tab/tab4/map
   */
   .state('tabsController.map', {
-    url: '/map',
+    url: '/map/:venueName',
     views: {
       'tab1': {
         templateUrl: 'templates/map.html',

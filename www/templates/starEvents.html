@@ -1,16 +1,18 @@
 <ion-view title="Star Events" id="page2">
   <ion-content padding="true" class="has-header">
-    <a class="list card" style="display:block;text-decoration:none;" ui-sref="tabsController.register()" id="starEvents-card21">
-      <div style="margin: 0px; line-height: 250px; background-color: rgb(232, 235, 239); text-align: center;">
-        <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+
+    <a class="list card" ng-repeat="starEvent in starEvents" style="display:block;text-decoration:none;" ui-sref="tabsController.register({ id: starEvent.id })" id="starEvents-card21">
+      <div style="margin: 0px; background-color: rgb(232, 235, 239); text-align: center;">
+        <img ng-src="{{ starEvent.imageURL }}" style="width:100%; height: auto" />
       </div>
-      <h2 id="starEvents-heading1" style="color:#000000;">Singing Contest</h2>
+      <h2 id="starEvents-heading1" style="color:#000000;">{{ starEvent.eventName }}</h2>
       <div id="starEvents-markdown3" class="show-list-numbers-and-dots">
-        <p style="color:#000000;font-size:16px;">Venue: AC Hall</p>
+        <p style="color:#000000;font-size:16px;">Venue: {{ starEvent.venue }}</p>
       </div>
       <div id="starEvents-markdown4" class="show-list-numbers-and-dots">
-        <p style="color:#000000;font-size:16px;">Date: 9/2/2018</p>
+        <p style="color:#000000;font-size:16px;">Date: {{ starEvent.eventDate.getFullYear() + "-" + (starEvent.eventDate.getMonth() + 1) + "-" + starEvent.eventDate.getDate() }}</p>
       </div>
     </a>
+
   </ion-content>
 </ion-view>
