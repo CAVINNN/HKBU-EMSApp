@@ -1,10 +1,7 @@
 <ion-view title="Registered Events" id="page11">
   <ion-content padding="true" class="has-header">
     <ion-list id="registeredEvents-list10">
-      <ion-item class="item-icon-right" id="registeredEvents-list-item45" ui-sref="tabsController.register()">Singing Contest
-        <i class="icon ion-ios-arrow-forward"></i>
-      </ion-item>
-      <ion-item class="item-icon-right" id="registeredEvents-list-item46" ui-sref="tabsController.register()">Smarter Hong Kong
+      <ion-item ng-repeat="event in events" class="item-icon-right" id="registeredEvents-list-item45" ui-sref="tabsController.register({ id: event.id })">{{ event.eventName }}
         <i class="icon ion-ios-arrow-forward"></i>
       </ion-item>
     </ion-list>

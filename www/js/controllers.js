@@ -56,18 +56,22 @@ angular.module('app.controllers', [])
 
             let alertPopup = $ionicPopup.alert({
               title: error.data,
-              template: 'Login failed. Please try again.'
+              template: 'Logout failed. Please try again.'
             });
 
           });
       };
 
-      console.log($scope.isLogined);
-
     }])
 
-  .controller('registerCtrl', ['$scope', '$stateParams', '$http',
-    function ($scope, $stateParams, $http) {
+  .controller('registerCtrl', ['$scope', '$stateParams', '$http', '$cookies', '$ionicPopup',
+    function ($scope, $stateParams, $http, $cookies, $ionicPopup) {
+
+      $scope.isLogin = false;
+
+      if( ($cookies.get('role') !== undefined) && ($cookies.get('username') !== undefined) ) {
+        $scope.isLogin = true;
+      }
 
       $http.get("http://localhost:1337/detail/" + $stateParams.id)
         .then(function (response) {
@@ -77,6 +81,74 @@ angular.module('app.controllers', [])
         }, function (error) {
           console.log(error);
         });
+
+
+      $scope.register = function (eventId) {
+
+        let confirmPopup = $ionicPopup.confirm({
+          title: 'Register the event?',
+          template: 'Are you sure?'
+        });
+
+        confirmPopup.then(function (res) {
+          if (res) {
+            $http.post("http://localhost:1337/mobileRegister/" + eventId)
+              .then(function (response) {
+
+                $scope.event.isRegistered = true;
+
+                let alertPopup = $ionicPopup.alert({
+                  template: 'Register Successfully.'
+                });
+
+              }, function (error) {
+
+                let alertPopup = $ionicPopup.alert({
+                  title: error.data,
+                  template: 'Failed. Please try again.'
+                });
+
+              });
+          } else {
+            console.log('not sure');
+          }
+        });
+
+      };
+
+
+      $scope.cancel = function (eventId) {
+
+        let confirmPopup = $ionicPopup.confirm({
+          title: 'Cancel the event?',
+          template: 'Are you sure?'
+        });
+
+        confirmPopup.then(function (res) {
+          if (res) {
+            $http.delete("http://localhost:1337/mobileCancel/" + eventId)
+              .then(function (response) {
+
+                $scope.event.isRegistered = false;
+
+                let alertPopup = $ionicPopup.alert({
+                  template: 'Cancel Successfully.'
+                });
+
+              }, function (error) {
+
+                let alertPopup = $ionicPopup.alert({
+                  title: error.data,
+                  template: 'Failed. Please try again.'
+                });
+
+              });
+          } else {
+            console.log('not sure');
+          }
+        });
+
+      };
 
     }])
 
@@ -147,8 +219,14 @@ angular.module('app.controllers', [])
 
     }])
 
-  .controller('registeredEventsCtrl', ['$scope', '$stateParams',
-    function ($scope, $stateParams) {
+  .controller('registeredEventsCtrl', ['$scope', '$stateParams', '$http',
+    function ($scope, $stateParams, $http) {
 
+      $http.get("http://localhost:1337/registered/")
+        .then(function (response) {
+          $scope.events = response.data.registeredEvents;
+        }, function (error) {
+          console.log(error);
+        });
 
     }])

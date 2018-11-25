@@ -9,7 +9,8 @@
         <p style="color:#000000;">{{ event.fullDesc }}</p>
       </div>
       <div id="register-button-bar2" class="button-bar">
-        <button ng-if="event.isRegistered" id="register-button7" style="border-radius:10px 10px 10px 10px;" class="button button-energized button-block">Register</button>
+        <button ng-if="isLogin && !event.isRegistered" id="register-button7" style="border-radius:10px 10px 10px 10px;" class="button button-energized button-block" ng-click="register(event.id)">Register</button>
+        <button ng-if="isLogin && event.isRegistered" id="register-button7" style="border-radius:10px 10px 10px 10px;" class="button button-assertive button-block" ng-click="cancel(event.id)">Cancel</button>
         <a ui-sref="tabsController.map({ venueName: event.venue })" id="register-button8" style="border-radius:10px 10px 10px 10px;" class="button button-positive button-block">Address</a>
       </div>
     </div>
