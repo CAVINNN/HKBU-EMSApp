@@ -157,7 +157,7 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
 
   .state('tabsController.login', {
-    url: '/login',
+    url: '/login/:isLogin',
     views: {
       'tab4': {
         templateUrl: 'templates/login.html',

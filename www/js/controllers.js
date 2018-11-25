@@ -32,12 +32,37 @@ angular.module('app.controllers', [])
 
     }])
 
-  .controller('meCtrl', ['$scope', '$stateParams', '$cookies',
-    function ($scope, $stateParams, $cookies) {
+  .controller('meCtrl', ['$scope', '$stateParams', '$cookies', '$http', '$window', '$ionicPopup',
+    function ($scope, $stateParams, $cookies, $http, $window, $ionicPopup) {
 
-      console.log($cookies.getAll());
+      $scope.isLogined = false;
 
-      console.log($cookies.get('sails.sid'));
+      if( ($cookies.get('role') !== undefined) && ($cookies.get('username') !== undefined) ) {
+        $scope.isLogined = true;
+        $scope.username = $cookies.get('username');
+      }
+
+      $scope.logout = function() {
+        $http.post("http://localhost:1337/mobileLogout")
+          .then(function (response) {
+
+            $window.location.reload();
+
+            let alertPopup = $ionicPopup.alert({
+              template: 'Logout Successfully.'
+            });
+
+          }, function (error) {
+
+            let alertPopup = $ionicPopup.alert({
+              title: error.data,
+              template: 'Login failed. Please try again.'
+            });
+
+          });
+      };
+
+      console.log($scope.isLogined);
 
     }])
 
@@ -94,24 +119,21 @@ angular.module('app.controllers', [])
 
     }])
 
-  .controller('loginCtrl', ['$scope', '$stateParams', '$http', '$ionicHistory', '$ionicPopup',
-    function ($scope, $stateParams, $http, $ionicHistory, $ionicPopup) {
+  .controller('loginCtrl', ['$scope', '$stateParams', '$http', '$ionicHistory', '$ionicPopup', '$window',
+    function ($scope, $stateParams, $http, $ionicHistory, $ionicPopup, $window) {
 
       $scope.info = {};
 
       $scope.login = function () {
-
         $http.post("http://localhost:1337/mobileLogin", $scope.info)
           .then(function (response) {
 
-            let cookie = response.data.cookie;
-
+            $ionicHistory.goBack();
+            $window.location.reload();
 
             let alertPopup = $ionicPopup.alert({
               template: 'Login Successfully.'
             });
-
-            $ionicHistory.goBack();
 
           }, function (error) {
 
@@ -121,8 +143,7 @@ angular.module('app.controllers', [])
             });
 
           });
-
-      }
+      };
 
     }])
 

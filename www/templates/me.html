@@ -3,31 +3,22 @@
     <ion-list id="me-list7">
       <ion-item class="item-thumbnail-left" id="me-list-item32">
         <img src="img/man.jpg" />
-        <h1>visitor</h1>
+        <h1>{{ isLogined ? username : 'visitor' }}</h1>
       </ion-item>
     </ion-list>
     <ion-list id="me-list8">
 
-      <ion-item class="item-icon-right" id="me-list-item39" ui-sref="tabsController.login()">Login/Logoff
+      <ion-item ng-if="!isLogined" class="item-icon-right" id="me-list-item39" ui-sref="tabsController.login({ isLogin: isLogined })">Login
         <i class="icon ion-ios-arrow-forward"></i>
       </ion-item>
 
-      <ion-item class="item-icon-right" id="me-list-item40" ui-sref="tabsController.registeredEvents()">Registered Events
+      <ion-item ng-if="isLogined" class="item-icon-right" id="me-list-item39" ng-click="logout()">Logoff
         <i class="icon ion-ios-arrow-forward"></i>
       </ion-item>
 
-
-      <!--<ion-item ng-if="!userinfo.isLogged" class="item-icon-right" id="me-list-item39" ui-sref="tabsController.login()">Login-->
-        <!--<i class="icon ion-ios-arrow-forward"></i>-->
-      <!--</ion-item>-->
-
-      <!--<ion-item ng-if="userinfo.isLogged" class="item-icon-right" id="me-list-item39" ui-sref="tabsController.login()">Logoff-->
-        <!--<i class="icon ion-ios-arrow-forward"></i>-->
-      <!--</ion-item>-->
-
-      <!--<ion-item ng-if="userinfo.isLogged" class="item-icon-right" id="me-list-item40" ui-sref="tabsController.registeredEvents()">Registered Events-->
-        <!--<i class="icon ion-ios-arrow-forward"></i>-->
-      <!--</ion-item>-->
+      <ion-item ng-if="isLogined" class="item-icon-right" id="me-list-item40" ui-sref="tabsController.registeredEvents()">Registered Events
+        <i class="icon ion-ios-arrow-forward"></i>
+      </ion-item>
 
     </ion-list>
   </ion-content>
