@@ -1,7 +1,8 @@
 # Event Management System - Hybrid App
 
 * **Star Events - Visitor**
-* ![image](https://raw.githubusercontent.com/CAVINNN/HKBU-EMSApp/master/screenshots/StarEvents.png)  
+
+  ![image](https://raw.githubusercontent.com/CAVINNN/HKBU-EMSApp/master/screenshots/StarEvents.png)  
 
 
 
@@ -50,12 +51,12 @@
 
 
 
-* **Registered Event Detail - Student
+* **Registered Event Detail - Student**
 * ![image](https://raw.githubusercontent.com/CAVINNN/HKBU-EMSApp/master/screenshots/RegisteredEvent2.png)  
 
 
 
-* **Address - Student
+* **Address - Student**
 * ![image](https://raw.githubusercontent.com/CAVINNN/HKBU-EMSApp/master/screenshots/Address.png)  
 
 
@@ -65,5 +66,5 @@
 
 
 
-* **Cancel Event - Student
+* **Cancel Event - Student**
 * ![image](https://raw.githubusercontent.com/CAVINNN/HKBU-EMSApp/master/screenshots/CancelEvent2.png)  
